@@ -213,10 +213,10 @@ if df.empty:
 # ── Sidebar Intelligence Panel ──────────────────────────────────
 with st.sidebar:
     if lottie_ship:
-        st_lottie(lottie_ship, height=180, key="ship_loader")
+        st_lottie(lottie_ship, height=100, key="ship_loader")
     else:
-        # High-stability Fluent Emoji fallback
-        st.image("https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Ship.png", width=150)
+        # Reduced size for better sidebar fit
+        st.image("https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Ship.png", width=70)
     
     st.markdown('<h2 style="font-weight:800; margin-bottom:0;">SALES DASHBOARD</h2>', unsafe_allow_html=True)
     st.markdown('<p style="color:#7F77DD; font-size:0.8rem;">SQL ANALYTICS ENGINE</p>', unsafe_allow_html=True)
