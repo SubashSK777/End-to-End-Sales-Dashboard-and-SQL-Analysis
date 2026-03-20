@@ -212,11 +212,7 @@ if df.empty:
 
 # ── Sidebar Intelligence Panel ──────────────────────────────────
 with st.sidebar:
-    if lottie_ship:
-        st_lottie(lottie_ship, height=100, key="ship_loader")
-    else:
-        # Reduced size for better sidebar fit
-        st.image("https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Ship.png", width=70)
+    st.markdown('<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=header&text=LOGISTICS&fontSize=30&animation=fadeIn" width="100%" style="margin-bottom: 20px;" />', unsafe_allow_html=True)
     
     st.markdown('<h2 style="font-weight:800; margin-bottom:0;">SALES DASHBOARD</h2>', unsafe_allow_html=True)
     st.markdown('<p style="color:#7F77DD; font-size:0.8rem;">SQL ANALYTICS ENGINE</p>', unsafe_allow_html=True)
