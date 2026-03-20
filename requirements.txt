@@ -1,10 +1,14 @@
-pandas
-numpy
-matplotlib
-seaborn
-plotly
-streamlit
-sqlalchemy
-openpyxl
-streamlit-lottie
-requests
+# Core Analysis
+pandas>=2.2.2
+numpy>=2.0.0
+matplotlib>=3.9.0
+seaborn>=0.13.2
+sqlalchemy>=2.0.30
+openpyxl>=3.1.5
+
+# Visuals & Dashboard
+plotly>=5.22.0
+streamlit>=1.41.0
+streamlit-lottie>=0.0.5
+requests>=2.32.3
+altair>=5.3.0
