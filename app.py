@@ -227,8 +227,6 @@ if df.empty:
 
 # ── Sidebar Intelligence Panel ──────────────────────────────────
 with st.sidebar:
-    st.markdown('<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=header&text=LOGISTICS&fontSize=30&animation=fadeIn" width="100%" style="margin-bottom: 20px;" />', unsafe_allow_html=True)
-    
     st.markdown('<h2 style="font-weight:800; margin-bottom:0;">SALES DASHBOARD</h2>', unsafe_allow_html=True)
     st.markdown('<p style="color:#7F77DD; font-size:0.8rem;">SQL ANALYTICS ENGINE</p>', unsafe_allow_html=True)
     st.markdown("---")
@@ -257,10 +255,7 @@ filtered = df[
 
 # ── Hero Section ─────────────────────────────────────────────────
 st.markdown("""
-<div style="width: 100%; margin: 0; padding: 0;">
-    <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=250&section=header&text=Sales+Dash+Analysis&fontSize=60&animation=fadeIn&fontAlignY=38&desc=End-to-End+Retail+Analysis+%2B+SQL&descAlignY=51&descAlign=62" width="100%" style="display: block; width: 100vw; margin-left: calc(-50vw + 50%);" />
-</div>
-<div class="premium-header" style="margin: 0 2rem 3rem 2rem;">
+<div class="premium-header">
     <h1>SALES DASHBOARD + SQL ANALYSIS</h1>
     <p style="color: #AFA9EC; font-size: 1.2rem; font-weight: 300; letter-spacing: 2px;">
         TRANSFORMING RETAIL DATA INTO ACTIONABLE BUSINESS INTELLIGENCE
