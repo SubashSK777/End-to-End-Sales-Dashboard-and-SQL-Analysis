@@ -23,10 +23,10 @@ def load_lottieurl(url: str):
         return None
     return r.json()
 
-# Dynamic Lottie Assets
-lottie_ship = load_lottieurl("https://assets10.lottiefiles.com/packages/lf20_6s6o7j.json")  # Sea ship
-lottie_stats = load_lottieurl("https://assets4.lottiefiles.com/packages/lf20_qpwb7q8e.json") # Statistics
-lottie_success = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_uu0x8lqv.json") # Success check
+# Dynamic Lottie Assets (Fallback managed)
+lottie_ship = load_lottieurl("https://lottie.host/7604506c-897c-4740-9e0c-8d13e3164478/9vV4K6U8R8.json")
+lottie_stats = load_lottieurl("https://lottie.host/38316ce3-8902-45e0-94e8-8b9cbd38515c/o6j8zI50yT.json")
+lottie_success = load_lottieurl("https://lottie.host/8816ce33-c902-45e0-94e8-8b9cbd38515c/success.json") # Generic success path
 
 # ── Custom CSS for Ultra-Premium Look ──────────────────────────
 st.markdown("""
@@ -152,19 +152,45 @@ st.markdown("""
 @st.cache_data
 def load_data():
     db_path = "data/sales.db"
+    csv_path = "data/superstore.csv"
+
+    # Auto-generate Database if missing (Portable for Streamlit Cloud)
+    if not os.path.exists(db_path) and os.path.exists(csv_path):
+        df_raw = pd.read_csv(csv_path, encoding='latin-1')
+        df_raw['Order Date'] = pd.to_datetime(df_raw['Order Date'])
+        df_raw['Ship Date']  = pd.to_datetime(df_raw['Ship Date'])
+        df_raw['Year']          = df_raw['Order Date'].dt.year
+        df_raw['Month']         = df_raw['Order Date'].dt.month
+        df_raw['Month_Name']    = df_raw['Order Date'].dt.strftime('%b')
+        df_raw['Quarter']       = df_raw['Order Date'].dt.quarter
+        df_raw['YearMonth']     = df_raw['Order Date'].dt.to_period('M').astype(str)
+        df_raw['Days_to_Ship']  = (df_raw['Ship Date'] - df_raw['Order Date']).dt.days
+        
+        # KEY FIX: Replace BOTH spaces and hyphens to match 'Sub_Category'
+        df_raw.columns = df_raw.columns.str.strip().str.replace(' ', '_').str.replace('-', '_')
+        
+        os.makedirs("data", exist_ok=True)
+        conn = sqlite3.connect(db_path)
+        df_raw.to_sql("sales", conn, if_exists="replace", index=False)
+        conn.close()
+
     if not os.path.exists(db_path):
         return pd.DataFrame()
+
     conn = sqlite3.connect(db_path)
     df = pd.read_sql("SELECT * FROM sales", conn)
     conn.close()
-    df['Order_Date'] = pd.to_datetime(df['Order_Date'])
+    
+    if not df.empty and 'Order_Date' in df.columns:
+        df['Order_Date'] = pd.to_datetime(df['Order_Date'])
     return df
 
 df = load_data()
 
 if df.empty:
-    st.error("No intelligence assets found! Please trigger deployment via 'setup_db.py'.")
-    st_lottie(lottie_stats, height=200)
+    st.error("Intelligence assets (CSV/DB) missing from 'data/' directory.")
+    if lottie_stats:
+        st_lottie(lottie_stats, height=200)
     st.stop()
 
 # ── Sidebar Intelligence Panel ──────────────────────────────────

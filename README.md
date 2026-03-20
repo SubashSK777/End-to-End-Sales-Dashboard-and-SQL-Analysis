@@ -33,7 +33,6 @@
 
 | Step | description |
 | :--- | :--- |
-| <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Inbox%20Tray.png" alt="ELT" width="30" height="30" /> **ELT Process** | Transforming loose Superstore CSV data into a structured Relational SQLite Warehouse. |
 | <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Magnifying%20Glass%20Tilted%20Right.png" alt="SQL" width="30" height="30" /> **SQL Analysis** | Running business-critical queries to detect seasonality, loss-makers, and growth vectors. |
 | <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Objects/Frame%20with%20Picture.png" alt="EDA" width="30" height="30" /> **Visual EDA** | Creating executive-level charts with Plotly and Seaborn to tell the data story. |
 | <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png" alt="Dashboard" width="30" height="30" /> **Dashboard** | Deploying a live, interactive Streamlit application with a modern, glass-themed interface. |
@@ -67,12 +66,7 @@ Explore the insights in seconds!
    pip install -r requirements.txt
    ```
 
-3. **Initialize Core Engine:**
-   ```bash
-   python setup_db.py
-   ```
-
-4. **Boot Interactive App:**
+3. **Boot Interactive App:**
    ```bash
    streamlit run app.py
    ```
