@@ -169,7 +169,11 @@ if df.empty:
 
 # ── Sidebar Intelligence Panel ──────────────────────────────────
 with st.sidebar:
-    st_lottie(lottie_ship, height=180, key="ship_loader")
+    if lottie_ship:
+        st_lottie(lottie_ship, height=180, key="ship_loader")
+    else:
+        st.image("https://img.icons8.com/isometric/512/cargo-ship.png", width=150)
+    
     st.markdown('<h2 style="font-weight:800; margin-bottom:0;">SALES DASHBOARD</h2>', unsafe_allow_html=True)
     st.markdown('<p style="color:#7F77DD; font-size:0.8rem;">SQL ANALYTICS ENGINE</p>', unsafe_allow_html=True)
     st.markdown("---")
@@ -322,7 +326,8 @@ with st.expander("📡 RAW ASSET EXPLORER"):
 st.markdown("<br><br>", unsafe_allow_html=True)
 footer_col1, footer_col2, footer_col3 = st.columns([1, 2, 1])
 with footer_col2:
-    st_lottie(lottie_success, height=150, key="success_check")
+    if lottie_success:
+        st_lottie(lottie_success, height=150, key="success_check")
     st.markdown("""
     <div style="text-align: center; color: #AFA9EC; opacity: 0.7;">
         <p>© 2026 SALES DASHBOARD + SQL ANALYSIS</p>
