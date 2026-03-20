@@ -215,7 +215,8 @@ with st.sidebar:
     if lottie_ship:
         st_lottie(lottie_ship, height=180, key="ship_loader")
     else:
-        st.image("https://img.icons8.com/isometric/512/cargo-ship.png", width=150)
+        # High-stability Fluent Emoji fallback
+        st.image("https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Ship.png", width=150)
     
     st.markdown('<h2 style="font-weight:800; margin-bottom:0;">SALES DASHBOARD</h2>', unsafe_allow_html=True)
     st.markdown('<p style="color:#7F77DD; font-size:0.8rem;">SQL ANALYTICS ENGINE</p>', unsafe_allow_html=True)
