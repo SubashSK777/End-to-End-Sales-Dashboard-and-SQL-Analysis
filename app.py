@@ -10,9 +10,9 @@ from streamlit_lottie import st_lottie
 
 # ── Page Configuration ──────────────────────────────────────────
 st.set_page_config(
-    page_title="CargoTrack | Premium Sales Analytics",
+    page_title="Sales Dashboard + SQL Analysis",
     layout="wide",
-    page_icon="🛳️",
+    page_icon="📊",
     initial_sidebar_state="expanded"
 )
 
@@ -170,8 +170,8 @@ if df.empty:
 # ── Sidebar Intelligence Panel ──────────────────────────────────
 with st.sidebar:
     st_lottie(lottie_ship, height=180, key="ship_loader")
-    st.markdown('<h2 style="font-weight:800; margin-bottom:0;">CARGOTRACK</h2>', unsafe_allow_html=True)
-    st.markdown('<p style="color:#7F77DD; font-size:0.8rem;">INTEL CONTROL CENTER</p>', unsafe_allow_html=True)
+    st.markdown('<h2 style="font-weight:800; margin-bottom:0;">SALES DASHBOARD</h2>', unsafe_allow_html=True)
+    st.markdown('<p style="color:#7F77DD; font-size:0.8rem;">SQL ANALYTICS ENGINE</p>', unsafe_allow_html=True)
     st.markdown("---")
     
     st.markdown('<p class="filter-label">📅 TEMPORAL RADAR</p>', unsafe_allow_html=True)
@@ -199,9 +199,9 @@ filtered = df[
 # ── Hero Section ─────────────────────────────────────────────────
 st.markdown("""
 <div class="premium-header">
-    <h1>CARGOTRACK ANALYTICS</h1>
+    <h1>SALES DASHBOARD + SQL ANALYSIS</h1>
     <p style="color: #AFA9EC; font-size: 1.2rem; font-weight: 300; letter-spacing: 2px;">
-        TRANSFORMING LOGISTICS DATA INTO COMPETITIVE INTELLIGENCE
+        TRANSFORMING RETAIL DATA INTO ACTIONABLE BUSINESS INTELLIGENCE
     </p>
 </div>
 """, unsafe_allow_html=True)
@@ -325,7 +325,7 @@ with footer_col2:
     st_lottie(lottie_success, height=150, key="success_check")
     st.markdown("""
     <div style="text-align: center; color: #AFA9EC; opacity: 0.7;">
-        <p>© 2026 CARGOTRACK INTELLIGENCE SYSTEMS</p>
-        <p style="font-size: 0.7rem;">OPTIMIZING GLOBAL COMMERCE PIXEL BY PIXEL</p>
+        <p>© 2026 SALES DASHBOARD + SQL ANALYSIS</p>
+        <p style="font-size: 0.7rem;">RETAIL DATA ARCHITECTURE SYSTEM</p>
     </div>
     """, unsafe_allow_html=True)

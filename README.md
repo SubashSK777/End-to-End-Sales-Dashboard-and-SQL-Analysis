@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=250&section=header&text=CargoTrack%20Analytics&fontSize=60&animation=fadeIn&fontAlignY=38&desc=Enterprise%20Sales%20Intelligence%20Warehouse&descAlignY=51&descAlign=62" width="100%" />
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=250&section=header&text=Sales+Dash+Analysis&fontSize=60&animation=fadeIn&fontAlignY=38&desc=End-to-End+Retail+Analysis+%2B+SQL&descAlignY=51&descAlign=62" width="100%" />
 
 [![Python](https://img.shields.io/badge/Python-3.13%2B-blue?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-orange?style=for-the-badge&logo=jupyter&logoColor=white)](https://jupyter.org)
@@ -9,6 +9,8 @@
 [![Pandas](https://img.shields.io/badge/Pandas-Data%20Analysis-red?style=for-the-badge&logo=pandas&logoColor=white)](https://pandas.pydata.org/)
 
 <br/>
+
+**End-to-End Sales Dashboard + SQL Analysis** is a high-performance analytics platform that transforms raw retail logistics data into actionable executive insights. Built with a full-stack data science workflow: from SQL-relational modeling to a high-end interactive Streamlit dashboard.
 
 <p align="center">
   <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=500&size=20&pause=1000&color=7F77DD&center=true&vCenter=true&width=600&lines=Analyze+9,994+US+Retail+Orders;SQL+Window+Functions+for+Deep+Insights;Premium+Streamlit+Dashboard+with+Glassmorphism;Automated+ELT+Data+Pipeline;Identify+Profit-Driving+Regions+with+AI!" alt="Typing SVG" />
@@ -91,6 +93,6 @@ Explore the insights in seconds!
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Travel%20and%20places/Rocket.png" alt="Rocket" width="50" height="50" />
-  <h3>Built with ❤️ by Intelligence Systems</h3>
+  <h3>Built with ❤️ for Sales Intelligence</h3>
   <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=100&section=footer" width="100%"/>
 </div>
