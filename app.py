@@ -145,6 +145,21 @@ st.markdown("""
         padding: 1rem;
         border: 1px solid rgba(255, 255, 255, 0.05);
     }
+    /* Remove default Streamlit padding for edge-to-edge feel */
+    .main .block-container {
+        padding-top: 0rem !important;
+        padding-left: 0rem !important;
+        padding-right: 0rem !important;
+        max-width: 100% !important;
+    }
+    
+    [data-testid="stSidebarNav"] {
+        padding-top: 0rem !important;
+    }
+
+    [data-testid="stVerticalBlock"] > div:first-child > div:first-child {
+        padding-top: 0 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -242,8 +257,10 @@ filtered = df[
 
 # ── Hero Section ─────────────────────────────────────────────────
 st.markdown("""
-<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=Sales+Analysis&fontSize=60&animation=fadeIn&fontAlignY=38&desc=End-to-End+Retail+Intelligence&descAlignY=51&descAlign=62" width="100%" style="margin-bottom: -40px;" />
-<div class="premium-header">
+<div style="width: 100%; margin: 0; padding: 0;">
+    <img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=250&section=header&text=Sales+Dash+Analysis&fontSize=60&animation=fadeIn&fontAlignY=38&desc=End-to-End+Retail+Analysis+%2B+SQL&descAlignY=51&descAlign=62" width="100%" style="display: block; width: 100vw; margin-left: calc(-50vw + 50%);" />
+</div>
+<div class="premium-header" style="margin: 0 2rem 3rem 2rem;">
     <h1>SALES DASHBOARD + SQL ANALYSIS</h1>
     <p style="color: #AFA9EC; font-size: 1.2rem; font-weight: 300; letter-spacing: 2px;">
         TRANSFORMING RETAIL DATA INTO ACTIONABLE BUSINESS INTELLIGENCE
