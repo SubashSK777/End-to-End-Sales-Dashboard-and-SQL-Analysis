@@ -6,3 +6,5 @@ plotly
 streamlit
 sqlalchemy
 openpyxl
+streamlit-lottie
+requests

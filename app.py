@@ -5,6 +5,8 @@ import plotly.express as px
 import plotly.graph_objects as go
 import sqlite3
 import os
+import requests
+from streamlit_lottie import st_lottie
 
 # ── Page Configuration ──────────────────────────────────────────
 st.set_page_config(
@@ -14,63 +16,139 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ── Custom CSS for Premium Look ──────────────────────────────────
+# ── Animation Loader ──────────────────────────────────────────
+def load_lottieurl(url: str):
+    r = requests.get(url)
+    if r.status_code != 200:
+        return None
+    return r.json()
+
+# Dynamic Lottie Assets
+lottie_ship = load_lottieurl("https://assets10.lottiefiles.com/packages/lf20_6s6o7j.json")  # Sea ship
+lottie_stats = load_lottieurl("https://assets4.lottiefiles.com/packages/lf20_qpwb7q8e.json") # Statistics
+lottie_success = load_lottieurl("https://assets9.lottiefiles.com/packages/lf20_uu0x8lqv.json") # Success check
+
+# ── Custom CSS for Ultra-Premium Look ──────────────────────────
 st.markdown("""
 <style>
-    /* Main Background */
-    .stApp {
-        background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-        color: #ffffff;
-    }
-    
-    /* Header Container */
-    .main-header {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(10px);
-        padding: 2rem;
-        border-radius: 20px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        margin-bottom: 2rem;
-        text-align: center;
-        animation: fadeInDown 0.8s ease-out;
-    }
-    
-    /* KPI Cards */
-    .kpi-card {
-        background: rgba(255, 255, 255, 0.03);
-        padding: 1.5rem;
-        border-radius: 15px;
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        text-align: center;
-        transition: transform 0.3s ease, background 0.3s ease;
-    }
-    
-    .kpi-card:hover {
-        transform: translateY(-5px);
-        background: rgba(255, 255, 255, 0.07);
-        border-color: #7F77DD;
-    }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
 
-    /* Animations */
-    @keyframes fadeInDown {
-        0% { opacity: 0; transform: translateY(-20px); }
-        100% { opacity: 1; transform: translateY(0); }
-    }
-    
-    h1, h2, h3 {
-        color: #ffffff !important;
+    /* Global Typography */
+    html, body, [class*="css"] {
         font-family: 'Inter', sans-serif;
     }
 
-    /* Sidebar Styling */
-    section[data-testid="stSidebar"] {
-        background-color: rgba(15, 12, 41, 0.9) !important;
-        border-right: 1px solid rgba(255, 255, 255, 0.1);
+    /* Main Container with subtle mesh gradient */
+    .stApp {
+        background-color: #0c0b1a;
+        background-image: 
+            radial-gradient(at 0% 0%, hsla(245, 90%, 15%, 1) 0, transparent 50%), 
+            radial-gradient(at 50% 0%, hsla(220, 80%, 10%, 1) 0, transparent 50%), 
+            radial-gradient(at 100% 0%, hsla(260, 70%, 15%, 1) 0, transparent 50%);
+        color: #ffffff;
+    }
+    
+    /* Premium Glassmorphism Header */
+    .premium-header {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        padding: 3rem;
+        border-radius: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin-bottom: 3rem;
+        box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        text-align: center;
+        animation: slideInDown 1s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    
+    .premium-header h1 {
+        font-weight: 800;
+        letter-spacing: -2px;
+        background: linear-gradient(90deg, #AFA9EC, #ffffff, #7F77DD);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-size: 3.5rem !important;
+        margin-bottom: 0.5rem;
+    }
+
+    /* Animated KPI Cards */
+    .metric-card {
+        background: rgba(255, 255, 255, 0.02);
+        padding: 1.8rem;
+        border-radius: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        text-align: left;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .metric-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        background: rgba(255, 255, 255, 0.06);
+        border-color: #7F77DD;
+        box-shadow: 0 15px 45px rgba(127, 119, 221, 0.2);
+    }
+
+    .metric-card::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(127, 119, 221, 0.1) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    .metric-card:hover::after {
+        opacity: 1;
+    }
+
+    /* Section Highlighters */
+    .section-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-top: 2rem;
+        margin-bottom: 1.5rem;
+        padding-left: 1rem;
+        border-left: 5px solid #7F77DD;
+    }
+
+    /* Animations */
+    @keyframes slideInDown {
+        from { transform: translateY(-50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .fade-in {
+        animation: fadeIn 1.5s ease-in;
+    }
+
+    /* Filter Icons Labeling */
+    .filter-label {
+        font-weight: 600;
+        color: #AFA9EC;
+        margin-top: 1rem;
+    }
+
+    /* Chart Containers */
+    .chart-box {
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 24px;
+        padding: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
 </style>
 """, unsafe_allow_html=True)
 
-# ── Load Data ─────────────────────────────────────────────
+# ── Data Core ─────────────────────────────────────────────
 @st.cache_data
 def load_data():
     db_path = "data/sales.db"
@@ -85,128 +163,153 @@ def load_data():
 df = load_data()
 
 if df.empty:
-    st.error("No data found! Please run 'setup_db.py' first.")
+    st.error("No intelligence assets found! Please trigger deployment via 'setup_db.py'.")
+    st_lottie(lottie_stats, height=200)
     st.stop()
 
-# ── Sidebar Filter System ───────────────────────────────────────
+# ── Sidebar Intelligence Panel ──────────────────────────────────
 with st.sidebar:
-    st.image("https://img.icons8.com/isometric/512/cargo-ship.png", width=100)
-    st.title("🎛️ Control Center")
+    st_lottie(lottie_ship, height=180, key="ship_loader")
+    st.markdown('<h2 style="font-weight:800; margin-bottom:0;">CARGOTRACK</h2>', unsafe_allow_html=True)
+    st.markdown('<p style="color:#7F77DD; font-size:0.8rem;">INTEL CONTROL CENTER</p>', unsafe_allow_html=True)
     st.markdown("---")
     
+    st.markdown('<p class="filter-label">📅 TEMPORAL RADAR</p>', unsafe_allow_html=True)
     year_list = sorted(df['Year'].unique())
-    year = st.multiselect("📅 Select Years", year_list, default=year_list)
+    year = st.multiselect("Select Target Years", year_list, default=year_list)
     
+    st.markdown('<p class="filter-label">🌏 GEOSPATIAL SCOPE</p>', unsafe_allow_html=True)
     region_list = df['Region'].unique()
-    region = st.multiselect("🌏 Select Regions", region_list, default=region_list)
+    region = st.multiselect("Select Operations Focus", region_list, default=region_list)
     
+    st.markdown('<p class="filter-label">📦 CATEGORY DEPTH</p>', unsafe_allow_html=True)
     category_list = df['Category'].unique()
-    category = st.multiselect("📦 Select Categories", category_list, default=category_list)
+    category = st.multiselect("Select Logistics Sectors", category_list, default=category_list)
     
     st.markdown("---")
-    st.markdown("Built with ❤️ using Streamlit & Plotly")
+    st.info("💡 Pro-Tip: Filter specific high-discount months to isolate low-margin root causes.")
 
-# Filtered Data
+# Filtering logic
 filtered = df[
     df['Year'].isin(year) &
     df['Region'].isin(region) &
     df['Category'].isin(category)
 ]
 
-# ── Header ─────────────────────────────────────────────────
-st.markdown('<div class="main-header"><h1>📊 CARGOTRACK ANALYTICS</h1><p style="color: #AFA9EC;">End-to-End Enterprise Sales Intelligence Dashboard</p></div>', unsafe_allow_html=True)
+# ── Hero Section ─────────────────────────────────────────────────
+st.markdown("""
+<div class="premium-header">
+    <h1>CARGOTRACK ANALYTICS</h1>
+    <p style="color: #AFA9EC; font-size: 1.2rem; font-weight: 300; letter-spacing: 2px;">
+        TRANSFORMING LOGISTICS DATA INTO COMPETITIVE INTELLIGENCE
+    </p>
+</div>
+""", unsafe_allow_html=True)
 
-# ── KPI Row ─────────────────────────────────────────────
-k1, k2, k3, k4 = st.columns(4)
+# ── Metric Grid ─────────────────────────────────────────────
+m1, m2, m3, m4 = st.columns(4)
 
-def kpi_card(col, title, value, prefix="", suffix=""):
+def styled_metric(col, label, value, prefix="", suffix="", delta=None):
     with col:
         st.markdown(f"""
-        <div class="kpi-card">
-            <p style="color: #AFA9EC; font-size: 0.9rem; margin-bottom: 0.2rem;">{title}</p>
-            <h2 style="margin: 0;">{prefix}{value}{suffix}</h2>
+        <div class="metric-card">
+            <p style="color: #AFA9EC; font-size: 0.8rem; margin-bottom: 0.2rem; font-weight:600;">{label.upper()}</p>
+            <h2 style="margin: 0; font-weight: 800; font-size: 2.2rem;">{prefix}{value}{suffix}</h2>
         </div>
         """, unsafe_allow_html=True)
 
-kpi_card(k1, "Total Revenue", f"{filtered['Sales'].sum():,.0f}", prefix="$")
-kpi_card(k2, "Total Profit", f"{filtered['Profit'].sum():,.0f}", prefix="$")
-kpi_card(k3, "Total Orders", f"{filtered['Order_ID'].nunique():,}")
+styled_metric(m1, "Gross Volume", f"{filtered['Sales'].sum():,.0f}", prefix="$")
+styled_metric(m2, "Net Intelligence", f"{filtered['Profit'].sum():,.0f}", prefix="$")
+styled_metric(m3, "Order Velocity", f"{filtered['Order_ID'].nunique():,}")
 margin = (filtered['Profit'].sum()/filtered['Sales'].sum()*100) if filtered['Sales'].sum() != 0 else 0
-kpi_card(k4, "Profit Margin", f"{margin:.1f}", suffix="%")
+styled_metric(m4, "Capital Efficiency", f"{margin:.1f}", suffix="%")
 
-st.markdown("<br>", unsafe_allow_html=True)
+st.markdown("<br><br>", unsafe_allow_html=True)
 
-# ── Main Analytics Section ─────────────
-col1, col2 = st.columns([2, 1])
+# ── Trend Analysis Row ──────────────────────────────────────────
+st.markdown('<p class="section-title">📉 MARKET VELOCITY & SECTOR SHARE</p>', unsafe_allow_html=True)
+row1_col1, row1_col2 = st.columns([2, 1])
 
-with col1:
-    st.subheader("📈 Monthly Revenue Trend")
-    monthly = filtered.groupby('YearMonth')['Sales'].sum().reset_index()
-    fig = px.line(monthly, x='YearMonth', y='Sales', markers=True,
-                  template="plotly_dark")
-    fig.update_traces(line_color='#7F77DD', line_width=3, marker_size=8)
-    fig.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        xaxis_tickangle=-45,
-        margin=dict(l=20, r=20, t=20, b=20),
-        height=400
-    )
-    st.plotly_chart(fig, use_container_width=True)
+with row1_col1:
+    with st.container():
+        monthly = filtered.groupby('YearMonth')['Sales'].sum().reset_index()
+        fig_trend = px.area(monthly, x='YearMonth', y='Sales', markers=True,
+                           template="plotly_dark",
+                           title=None)
+        fig_trend.update_traces(line_color='#7F77DD', fillcolor='rgba(127, 119, 221, 0.1)', 
+                                 line_width=4, marker=dict(size=8, color='#ffffff'))
+        fig_trend.update_layout(
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            xaxis_tickangle=-45,
+            margin=dict(l=0, r=0, t=10, b=0),
+            height=450,
+            xaxis=dict(showgrid=False),
+            yaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.05)')
+        )
+        st.plotly_chart(fig_trend, use_container_width=True)
 
-with col2:
-    st.subheader("🥧 Revenue by Category")
+with row1_col2:
     cat_rev = filtered.groupby('Category')['Sales'].sum().reset_index()
-    fig2 = px.pie(cat_rev, values='Sales', names='Category', hole=0.5,
-                  template="plotly_dark",
-                  color_discrete_sequence=['#7F77DD','#1D9E75','#E85D24'])
-    fig2.update_layout(
+    fig_pie = px.pie(cat_rev, values='Sales', names='Category', hole=0.7,
+                    template="plotly_dark",
+                    color_discrete_sequence=['#7F77DD','#534AB7','#AFA9EC'])
+    fig_pie.update_layout(
         paper_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=20, r=20, t=20, b=20),
-        height=400,
-        showlegend=True
+        margin=dict(l=10, r=10, t=10, b=10),
+        height=450,
+        showlegend=False
     )
-    st.plotly_chart(fig2, use_container_width=True)
+    # Center text for donut
+    fig_pie.add_annotation(text="SECTOR<br>SPLIT", showarrow=False,
+                          font=dict(size=20, color="#ffffff", family="Inter"))
+    st.plotly_chart(fig_pie, use_container_width=True)
 
-# ── Secondary Analytics Section ───────────────
-col3, col4 = st.columns(2)
+# ── Comparison Row ──────────────────────────────────────────────
+st.markdown('<p class="section-title">📊 GEOGRAPHIC & SEGMENT INTELLIGENCE</p>', unsafe_allow_html=True)
+row2_col1, row2_col2 = st.columns(2)
 
-with col3:
-    st.subheader("🗺️ Regional Performance")
+with row2_col1:
     reg = filtered.groupby('Region').agg(
         Revenue=('Sales','sum'), Profit=('Profit','sum')
-    ).reset_index().sort_values('Revenue', ascending=False)
+    ).reset_index().sort_values('Revenue', ascending=True)
     
-    fig3 = px.bar(reg, x='Region', y='Revenue', color='Profit',
-                  template="plotly_dark",
-                  color_continuous_scale='Purples')
-    fig3.update_layout(
+    fig_bar = px.bar(reg, y='Region', x='Revenue', color='Profit',
+                    orientation='h',
+                    template="plotly_dark",
+                    color_continuous_scale='Purples',
+                    title=None)
+    fig_bar.update_layout(
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        height=400
+        height=400,
+        margin=dict(l=0, r=0, t=0, b=0),
+        xaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.05)')
     )
-    st.plotly_chart(fig3, use_container_width=True)
+    st.plotly_chart(fig_bar, use_container_width=True)
 
-with col4:
-    st.subheader("📉 Profitability by Sub-Category")
+with row2_col2:
     sub = filtered.groupby('Sub_Category').agg(
         Profit=('Profit','sum')
-    ).reset_index().sort_values('Profit')
+    ).reset_index().sort_values('Profit', ascending=True)
     
-    fig4 = px.bar(sub, x='Profit', y='Sub_Category', orientation='h',
-                  template="plotly_dark",
-                  color='Profit',
-                  color_continuous_scale='RdYlGn')
-    fig4.update_layout(
+    fig_sub = px.bar(sub, x='Profit', y='Sub_Category', orientation='h',
+                    template="plotly_dark",
+                    color='Profit',
+                    color_continuous_scale='RdYlGn')
+    fig_sub.update_layout(
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        height=400
+        height=400,
+        margin=dict(l=0, r=0, t=0, b=0),
+        xaxis=dict(showgrid=True, gridcolor='rgba(255,255,255,0.05)')
     )
-    st.plotly_chart(fig4, use_container_width=True)
+    st.plotly_chart(fig_sub, use_container_width=True)
 
-# ── Data Intelligence Table ─────────────────────────────────
+# ── Data Expander ──────────────────────────────────────────────
 st.markdown("---")
-with st.expander("🔍 Explore Deep Data Records"):
+with st.expander("📡 RAW ASSET EXPLORER"):
+    st.markdown('<p style="color:#AFA9EC;">Real-time access to filtered low-level logistics records.</p>', unsafe_allow_html=True)
     st.dataframe(
         filtered[['Order_ID','Order_Date','Region','Category',
                   'Sub_Category','Sales','Profit','Discount']]
@@ -215,8 +318,14 @@ with st.expander("🔍 Explore Deep Data Records"):
         use_container_width=True
     )
 
-st.markdown("""
-<div style="text-align: center; color: #AFA9EC; padding: 2rem;">
-    <p>© 2026 CargoTrack Intelligence - Powered by AI</p>
-</div>
-""", unsafe_allow_html=True)
+# ── Footer ─────────────────────────────────────────────────────
+st.markdown("<br><br>", unsafe_allow_html=True)
+footer_col1, footer_col2, footer_col3 = st.columns([1, 2, 1])
+with footer_col2:
+    st_lottie(lottie_success, height=150, key="success_check")
+    st.markdown("""
+    <div style="text-align: center; color: #AFA9EC; opacity: 0.7;">
+        <p>© 2026 CARGOTRACK INTELLIGENCE SYSTEMS</p>
+        <p style="font-size: 0.7rem;">OPTIMIZING GLOBAL COMMERCE PIXEL BY PIXEL</p>
+    </div>
+    """, unsafe_allow_html=True)
