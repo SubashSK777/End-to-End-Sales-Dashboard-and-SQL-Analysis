@@ -154,7 +154,22 @@ def load_data():
     db_path = "data/sales.db"
     csv_path = "data/superstore.csv"
 
-    # Auto-generate Database if missing (Portable for Streamlit Cloud)
+    # FORCE REBUILD if DB column naming needs update (KeyError fix)
+    force_rebuild = False
+    if os.path.exists(db_path):
+        try:
+            conn = sqlite3.connect(db_path)
+            test_df = pd.read_sql("SELECT * FROM sales LIMIT 1", conn)
+            conn.close()
+            if 'Sub_Category' not in test_df.columns:
+                force_rebuild = True
+        except:
+            force_rebuild = True
+
+    if force_rebuild and os.path.exists(db_path):
+        os.remove(db_path)
+
+    # Auto-generate Database from CSV
     if not os.path.exists(db_path) and os.path.exists(csv_path):
         df_raw = pd.read_csv(csv_path, encoding='latin-1')
         df_raw['Order Date'] = pd.to_datetime(df_raw['Order Date'])
@@ -166,8 +181,10 @@ def load_data():
         df_raw['YearMonth']     = df_raw['Order Date'].dt.to_period('M').astype(str)
         df_raw['Days_to_Ship']  = (df_raw['Ship Date'] - df_raw['Order Date']).dt.days
         
-        # KEY FIX: Replace BOTH spaces and hyphens to match 'Sub_Category'
-        df_raw.columns = df_raw.columns.str.strip().str.replace(' ', '_').str.replace('-', '_')
+        # Clean columns: handle both Space and Hyphen
+        df_raw.columns = (df_raw.columns.str.strip()
+                         .str.replace(' ', '_', regex=False)
+                         .str.replace('-', '_', regex=False))
         
         os.makedirs("data", exist_ok=True)
         conn = sqlite3.connect(db_path)
