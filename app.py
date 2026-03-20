@@ -116,9 +116,9 @@ st.markdown("""
         border-left: 5px solid #7F77DD;
     }
 
-    /* Super-Cool Neon Custom Cursor */
+    /* Large Super-Cool Neon Custom Cursor */
     html, body, .stApp {
-        cursor: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='16' cy='16' r='12' stroke='%237F77DD' stroke-width='2' stroke-opacity='0.4' /%3E%3Ccircle cx='16' cy='16' r='8' stroke='%23AFA9EC' stroke-width='1.5' /%3E%3Ccircle cx='16' cy='16' r='2' fill='white' /%3E%3C/svg%3E") 16 16, auto !important;
+        cursor: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 32 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='16' cy='16' r='14' stroke='%237F77DD' stroke-width='1.5' stroke-opacity='0.4' /%3E%3Ccircle cx='16' cy='16' r='9' stroke='%23AFA9EC' stroke-width='2' /%3E%3Ccircle cx='16' cy='16' r='2.5' fill='white' /%3E%3C/svg%3E") 16 16, auto !important;
     }
 
     /* Standard Interactive Hover Glows */
@@ -172,8 +172,13 @@ st.markdown("""
         padding-top: 0rem !important;
     }
 
-    [data-testid="stVerticalBlock"] > div:first-child > div:first-child {
-        padding-top: 0 !important;
+    [data-testid="stSidebar"] [data-testid="stVerticalBlock"] {
+        padding-top: 0rem !important;
+        gap: 0.5rem !important;
+    }
+
+    .stMultiSelect div[role="listbox"] {
+        background: rgba(255,255,255,0.05) !important;
     }
 </style>
 """, unsafe_allow_html=True)
