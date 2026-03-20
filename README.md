@@ -1,152 +1,71 @@
-# CargoTrack: Cargo Booking and Management System
+# 🚢 CargoTrack: Enterprise Sales Intelligence
 
-## Overview
-CargoTrack is a comprehensive Cargo Booking and Management System developed using the MERN stack (MongoDB, Express.js, React.js, and Node.js). The platform enables users to book cargo space on available containers, track shipments in real time, and provides an admin panel for efficient container and cargo management. The system ensures secure user interactions through multi-step authentication, middleware-based authorization, and seamless container allocation.
+[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_svg)](https://your-app.streamlit.app)
+[![Python 3.13+](https://img.shields.io/badge/python-3.13%2B-blue.svg)](https://www.python.org/downloads/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
----
-
-## Technologies Used
-
-### **Frontend**
-- **React.js (18.2.0):** Provides a responsive and dynamic user interface for cargo booking, payment processing, and profile management.
-- **Material UI (5.15.9):** Enhances the UI with modern, pre-built React components.
-- **Framer Motion (11.0.3):** Enables smooth animations and transitions for an engaging user experience.
-- **React-Toastify (10.0.4):** Displays real-time notifications such as booking confirmations and system alerts.
-
-### **Backend**
-- **Node.js (20.11.0):** Executes server-side logic, handling authentication, database management, and API routing.
-- **Express.js (4.18.2):** Manages HTTP requests, routing, and RESTful API endpoints.
-- **MongoDB & Mongoose:** Provides a NoSQL database for efficient storage of bookings, users, containers, and transactions.
-- **JWT (JSON Web Tokens):** Ensures secure authentication and authorization through token-based access.
-- **Nodemailer (6.9.4):** Facilitates OTP-based email authentication.
-- **Bcrypt.js (2.4.3):** Encrypts passwords for secure storage.
-- **CORS (2.8.5):** Enables secure cross-origin communication between frontend and backend.
-- **Dotenv (16.3.1):** Manages environment variables for security-sensitive configurations.
-- **Nodemon (3.0.1):** Enhances backend development efficiency by enabling live server reloads.
+**CargoTrack** is a high-performance sales analytics platform that transforms raw retail logistics data into actionable executive insights. Built with a full-stack data science workflow: from SQL-relational modeling to a high-end interactive Streamlit dashboard.
 
 ---
 
-## Key Functionalities
+## 🚀 Key Features
 
-### **1. Admin Dashboard**
-The admin panel provides comprehensive container management, booking oversight, and utilization tracking.
+- **Automated ELT Pipeline**: Seamless extraction from CSV to a queryable SQLite data warehouse.
+- **Advanced SQL Analytics**: Leveraging Window Functions (`RANK`, `PARTITION BY`, `SUM OVER`) to identify market trends.
+- **Micro-Animation Dashboard**: A premium UI experience with glassmorphism and real-time Plotly visualizations.
+- **Strategic Intelligence**: Automated detection of high-discount loss zones and regional profit drivers.
 
-#### **Admin API Endpoints:**
-- `POST /cargo/admin/login` – Admin login with OTP-based authentication.
-- `POST /cargo/admin/register` – Admin registration with secure credentials.
-- `POST /cargo/admin/container` – Add a new container with route details and pricing.
-- `GET /cargo/admin/:adminId/containers` – Retrieve the list of containers managed by an admin.
-- `POST /cargo/admin/containerupdate` – Update container details such as location and capacity.
+## 🛠️ Tech Stack
 
-### **2. User Booking System**
-Users can book cargo space, track shipments, and manage their bookings securely.
+- **Engine**: Python, SQL (SQLite)
+- **Analytics**: Pandas, NumPy
+- **Visuals**: Plotly, Seaborn, Matplotlib
+- **App Framework**: Streamlit (Premium UI with Custom CSS)
+- **Data Source**: US Superstore Dataset (9,994 Orders)
 
-#### **User API Endpoints:**
-- `POST /register` – User registration with email verification.
-- `POST /login` – User login with OTP authentication.
-- `POST /verify-otp` – OTP verification for secure login.
-- `POST /cargo/booking` – Submit a cargo booking request with parcel dimensions and route details.
-- `POST /cargo/booking/payment` – Securely process payments and confirm bookings.
-- `GET /cargo/booking` – Retrieve past bookings and track active shipments.
+## 📊 Business Insights Extracted
 
----
+1. **The Discount Paradox**: Products with >40% discounts account for the majority of the bottom-line burn.
+2. **Category Performance**: *Technology* yields the highest margin (~17%), while *Furniture* leads in volume but lags in profitability.
+3. **Regional Hotspots**: The **West** region is the high-growth engine of the business.
+4. **Q4 Seasonality**: Significant revenue spike in October-December (Festive effect).
 
-## Database Schema and Relationships
-CargoTrack employs a structured schema design to ensure efficient management of bookings, containers, and user operations.
+## 🏃 Quick Start
 
-### **1. Users**
-- **Fields:** `name`, `email`, `phone`, `password`, `bookings` (array of booking references).
-- **Relationships:** Users can have multiple bookings linked to their profile.
-
-### **2. Bookings**
-- **Fields:** `from`, `to`, `height`, `width`, `breadth`, `cost`, `destinedContainer`, `status`.
-- **Relationships:** Each booking is associated with a user and, if confirmed, linked to a container.
-
-### **3. Cargo Items**
-- **Fields:** `length`, `breadth`, `height`, `from`, `to`.
-- **Relationships:** Cargo items are stored within containers and validated against space constraints.
-
-### **4. Containers**
-- **Fields:** `length`, `breadth`, `height`, `from`, `to`, `availableFrom`, `availableUntil`, `cargoItems`.
-- **Relationships:** Containers store multiple cargo items and are managed by admins.
-
-### **5. Admins**
-- **Fields:** `name`, `email`, `phone`, `password`, `containers`.
-- **Relationships:** Admins oversee multiple containers and manage bookings.
-
----
-
-## Data Flow and Storage
-
-### **1. User Registration & Booking Process**
-- User registers, and credentials are securely stored.
-- On booking, cargo details are saved, and an available container is allocated based on the route and dimensions.
-
-### **2. Container Allocation & Management**
-- The backend matches bookings with suitable containers.
-- Container space utilization is tracked, preventing overbooking.
-
-### **3. Admin Operations**
-- Admins create and manage containers, ensuring efficient allocation.
-- Containers and bookings are monitored using real-time tracking and percentage utilization calculations.
-
----
-
-## Setup Instructions
-
-### **1. Clone the Repository**
+### 1. Installation
 ```bash
-# Clone backend and frontend repositories
-git clone <backend-repo-url>
-git clone <frontend-repo-url>
+pip install -r requirements.txt
 ```
 
-### **2. Install Dependencies**
-For the backend:
+### 2. Database Initialization
 ```bash
-cd backend
-npm install
+python setup_db.py
 ```
-For the frontend:
+
+### 3. Launch Analysis Notebook
 ```bash
-cd frontend
-npm install
+jupyter notebook sales_analysis.ipynb
 ```
 
-### **3. Environment Variables Configuration**
-Create a `.env` file in the backend directory and define the following:
-```plaintext
-MONGO_URI=mongodb://localhost:27017/cargo-track
-JWT_SECRET=your-jwt-secret
-NODEMAILER_EMAIL=your-email@example.com
-NODEMAILER_PASSWORD=your-email-password
-```
-
-### **4. Running the Project**
-To start the backend and frontend in development mode:
+### 4. Deploy Dashboard
 ```bash
-# Backend
-cd backend
-npm run dev
-
-# Frontend
-cd frontend
-npm run dev
+streamlit run app.py
 ```
 
-### **5. Production Deployment**
-For production deployment:
-```bash
-# Build frontend for production
-cd frontend
-npm run build
+## 📂 Project Structure
+
+```text
+CargoTrack/
+├── data/
+│   ├── superstore.csv   # Raw Order Data
+│   └── sales.db         # Cultivated SQLite Warehouse
+├── app.py               # Streamlit Dashboard (Premium UI)
+├── sales_analysis.ipynb # Deep-dive SQL & EDA Notebook
+├── setup_db.py          # Database Build Script
+├── generate_notebook.py # Meta-generator for Analysis
+└── requirements.txt     # Dependency Resolution
 ```
-Consider using **Docker** for containerized deployment.
 
 ---
-
-## Conclusion
-CargoTrack offers a robust solution for cargo booking and shipment management, ensuring secure, scalable, and efficient operations. Its modular architecture enables seamless user interactions, real-time tracking, and optimized resource management. Future enhancements could include AI-driven container allocation, predictive ETA calculations, and blockchain-based shipment security.
-
-For contributions or inquiries, refer to the repository documentation or contact the development team.
-
+*Developed by [Your Name]*  
+*Built for the Modern Data Scientist*
