@@ -116,6 +116,21 @@ st.markdown("""
         border-left: 5px solid #7F77DD;
     }
 
+    /* Minimal Cool Custom Cursor */
+    html, body, .stApp {
+        cursor: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='8' cy='8' r='4' fill='white'/%3E%3Ccircle cx='8' cy='8' r='7' stroke='white' stroke-opacity='0.3'/%3E%3C/svg%3E") 8 8, auto !important;
+    }
+
+    /* Standard Interactive Hover Glows */
+    button, [data-testid="stSidebarNav"] div, .metric-card {
+        transition: all 0.3s ease-in-out !important;
+    }
+    
+    a:hover, button:hover {
+        text-shadow: 0 0 10px rgba(127, 119, 221, 0.5);
+        color: #AFA9EC !important;
+    }
+
     /* Animations */
     @keyframes slideInDown {
         from { transform: translateY(-50px); opacity: 0; }
