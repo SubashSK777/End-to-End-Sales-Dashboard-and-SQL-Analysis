@@ -246,6 +246,7 @@ filtered = df[
 
 # ── Hero Section ─────────────────────────────────────────────────
 st.markdown("""
+<img src="https://capsule-render.vercel.app/api?type=waving&color=gradient&height=200&section=header&text=Sales+Analysis&fontSize=60&animation=fadeIn&fontAlignY=38&desc=End-to-End+Retail+Intelligence&descAlignY=51&descAlign=62" width="100%" style="margin-bottom: -40px;" />
 <div class="premium-header">
     <h1>SALES DASHBOARD + SQL ANALYSIS</h1>
     <p style="color: #AFA9EC; font-size: 1.2rem; font-weight: 300; letter-spacing: 2px;">
